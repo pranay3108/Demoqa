@@ -1,5 +1,7 @@
 from openpyxl.reader.excel import load_workbook
 
+from Pages.Elements.elements_broken_links_Images import BrokenLinksImages
+from Pages.Elements.elements_dynamic_properties import DynamicProperties
 from Pages.Elements.elements_links import Links
 from Utilities.page_selector import pageselect, Submenuselectforfirsttime
 from Utilities.excel_reader import fileread,workbookload
@@ -8,6 +10,7 @@ from Pages.Elements.elements_checkbox import CheckBox
 from Pages.Elements.elements_radiobutton import RadioButton
 from Pages.Elements.elements_webtables import WebTables
 from Pages.Elements.elements_buttons import Buttons
+from Pages.Elements.elements_upload_and_download import UploadandDownload
 
 
 
@@ -32,14 +35,14 @@ def Elements(driver):
                 WebTables(driver, workbook, submenutobeselected)
             case "Buttons1":
                 Buttons(driver, workbook, submenutobeselected)
-            case "Links":
+            case "Links1":
                 Links(driver, workbook, submenutobeselected)
             case "Broken Links - Images":
-                Links(driver, workbook, submenutobeselected)
+                BrokenLinksImages(driver, workbook, submenutobeselected)
             case "Upload and Download":
-                Links(driver, workbook, submenutobeselected)
+                UploadandDownload(driver, workbook, submenutobeselected)
             case "Dynamic Properties":
-                Links(driver, workbook, submenutobeselected)
+                DynamicProperties(driver, workbook, submenutobeselected)
             case _:
                 print(f"Skipping unknown submenu: {submenutobeselected}")
                 continue
