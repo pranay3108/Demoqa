@@ -1,0 +1,81 @@
+from openpyxl.reader.excel import load_workbook
+
+from Pages.Elements.elements_links import Links
+from Utilities.page_selector import pageselect, Submenuselectforfirsttime
+from Utilities.excel_reader import fileread,workbookload
+from Pages.Elements.elements_textbox import Textbox
+from Pages.Elements.elements_checkbox import CheckBox
+from Pages.Elements.elements_radiobutton import RadioButton
+from Pages.Elements.elements_webtables import WebTables
+from Pages.Elements.elements_buttons import Buttons
+
+
+
+
+def Elements(driver):
+    cardtobeselected = "Elements"
+    pageselect(driver, cardtobeselected)
+    workbook= workbookload(cardtobeselected)
+    sheet_names = workbook.sheetnames
+    for i in range (0,len(sheet_names)):
+        print(sheet_names[i])
+        submenutobeselected=sheet_names[i]
+        Submenuselectforfirsttime(driver, submenutobeselected)
+        match submenutobeselected:
+            case "Text Box1":
+                Textbox(driver, workbook, submenutobeselected)
+            case "Check Box1":
+                CheckBox(driver, workbook, submenutobeselected)
+            case "Radio Button1":
+                RadioButton(driver, workbook, submenutobeselected)
+            case "Web Tables1":
+                WebTables(driver, workbook, submenutobeselected)
+            case "Buttons1":
+                Buttons(driver, workbook, submenutobeselected)
+            case "Links":
+                Links(driver, workbook, submenutobeselected)
+            case "Broken Links - Images":
+                Links(driver, workbook, submenutobeselected)
+            case "Upload and Download":
+                Links(driver, workbook, submenutobeselected)
+            case "Dynamic Properties":
+                Links(driver, workbook, submenutobeselected)
+            case _:
+                print(f"Skipping unknown submenu: {submenutobeselected}")
+                continue
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

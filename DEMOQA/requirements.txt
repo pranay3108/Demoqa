@@ -1,0 +1,6 @@
+selenium==4.8.0
+selenium-wire==5.1.0
+pytest>=7.0.0,<8.0.0
+openpyxl
+blinker==1.6.2
+setuptools>=65.0.0
