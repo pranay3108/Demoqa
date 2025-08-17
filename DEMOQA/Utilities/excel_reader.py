@@ -4,6 +4,8 @@ from operator import truediv, is_not
 from openpyxl.reader.excel import load_workbook
 import pytest
 
+from Utilities.paths import TEST_DATA_DIR
+
 
 def fileread(workbook,sheet_name):
     if sheet_name in workbook.sheetnames:
@@ -23,10 +25,7 @@ def fileread(workbook,sheet_name):
 
 
 def workbookload(filename):
-    # ✅ Get the project root directory (assuming this file is inside TestCases)
-    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    # ✅ Build relative path to the Excel file
-    file_path = os.path.join(project_root, 'Testdata', filename+'.xlsx')
+    file_path = os.path.join(TEST_DATA_DIR, filename+'.xlsx')
     # ✅ Load Workbook
     workbook = load_workbook(file_path)
     print("Workbook loaded from:", file_path)

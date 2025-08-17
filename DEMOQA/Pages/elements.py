@@ -10,7 +10,7 @@ from Pages.Elements.elements_checkbox import CheckBox
 from Pages.Elements.elements_radiobutton import RadioButton
 from Pages.Elements.elements_webtables import WebTables
 from Pages.Elements.elements_buttons import Buttons
-from Pages.Elements.elements_upload_and_download import UploadandDownload
+from Pages.Elements.elements_upload_and_download import UploadAndDownload
 
 
 
@@ -37,10 +37,10 @@ def Elements(driver):
                 Buttons(driver, workbook, submenutobeselected)
             case "Links1":
                 Links(driver, workbook, submenutobeselected)
-            case "Broken Links - Images":
+            case "Broken Links - Images1":
                 BrokenLinksImages(driver, workbook, submenutobeselected)
-            case "Upload and Download":
-                UploadandDownload(driver, workbook, submenutobeselected)
+            case "Upload and Download1":
+                UploadAndDownload(driver,workbook,submenutobeselected)
             case "Dynamic Properties":
                 DynamicProperties(driver, workbook, submenutobeselected)
             case _:
