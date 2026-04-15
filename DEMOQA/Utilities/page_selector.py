@@ -1,5 +1,4 @@
 import time
-from argparse import Action
 
 from selenium import webdriver
 from selenium.webdriver import ActionChains
@@ -38,21 +37,8 @@ def Submenuselectforfirsttime(driver,submenutobeselected):
         if Submenulist[i].text == submenutobeselected:
             # Perform mouse hover and click on the element
             ele = Submenulist[i]
+            wait.until(EC.visibility_of(ele))
+            driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", ele)
             wait.until(EC.element_to_be_clickable(ele))
-            time.sleep(5)
-            driver.execute_script("arguments[0].scrollIntoView(true);", ele)
             actions.move_to_element(ele).click().perform()
             break
-
-
-
-
-
-
-
-
-
-
-
-
-

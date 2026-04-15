@@ -18,6 +18,13 @@ def WebTables(driver, workbook, sheet_name):
     data = fileread(workbook, sheet_name)
     rows, cols = len(data), len(data[0])
 
+    # Find action column index ONCE outside the loop
+    headers = wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, ".rt-resizable-header-content")))
+    action_index = next((idx for idx, h in enumerate(headers) if h.text.strip() == "Action"), -1)
+    if action_index == -1:
+        logger.error("❌ 'Action' column not found.")
+        return
+
     # ➕ Add entries
     for i in range(1, rows):
         add_btn = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(),'Add')]")))
@@ -46,20 +53,17 @@ def WebTables(driver, workbook, sheet_name):
         row_elems = wait.until(EC.visibility_of_all_elements_located(
             (By.XPATH, "//div[contains(@class,'rt-tr-group')]")
         ))
+        
+        if not row_elems:
+            check.is_true(False, f"No rows found after searching for {original_value}")
+            continue
+            
         cells = row_elems[0].find_elements(By.CSS_SELECTOR, "div.rt-td")
         original_value = data[i][0]
 
         # 🔎 Verify search result
         logger.info(f"🔍 Searching for: {original_value}")
         check.equal(cells[0].text.strip(), original_value, f"Expected value '{original_value}' not found.")
-
-        # Find action column index
-        headers = wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, ".rt-resizable-header-content")))
-        action_index = next((idx for idx, h in enumerate(headers) if h.text.strip() == "Action"), -1)
-
-        if action_index == -1:
-            logger.error("❌ 'Action' column not found.")
-            return
 
         # ✏️ Edit row
         edit_icon = cells[action_index].find_element(By.XPATH, ".//span[@title='Edit']")
