@@ -7,14 +7,10 @@ from Pages.elements import Elements
 from Utilities.setup import Setup
 
 @pytest.fixture
-def setup_data():
+def driver():
     driver = Setup().driver
     yield driver
     driver.quit()
 
-def test_ele(setup_data):
-    driver = setup_data  # get driver from fixture
+def test_ele(driver):
     Elements(driver)
-
-
-
