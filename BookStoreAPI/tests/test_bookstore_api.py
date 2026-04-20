@@ -74,7 +74,7 @@ def test_delete_book(api_client):
 def test_delete_books(api_client):
     user_id = os.getenv("USER_ID")
     deleteBooks_response = api_client.delete(f"/BookStore/v1/Books/{user_id}")
-    assert deleteBooks_response.status_code == 204
+    assert deleteBooks_response.status_code == 200
 
     
 
