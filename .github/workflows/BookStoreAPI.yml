@@ -1,0 +1,55 @@
+name: BookStore API Pipeline
+
+on:
+  push:
+    branches:
+      - officetimecode
+    paths:
+      - BookStoreAPI/**
+
+  pull_request:
+    branches:
+      - officetimecode
+    paths:
+      - BookStoreAPI/**
+
+  workflow_dispatch:   # allows manual run
+
+jobs:
+  bookstore-api-tests:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: BookStoreAPI
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Create and activate virtual environment
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          python -m pip install --upgrade pip
+
+      - name: Install dependencies
+        run: |
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: |
+          source venv/bin/activate
+          pytest -v
+
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-report
+          path: BookStoreAPI/report.html

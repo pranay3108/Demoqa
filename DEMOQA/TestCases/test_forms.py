@@ -7,14 +7,10 @@ from Pages.forms import Forms
 from Utilities.setup import Setup
 
 @pytest.fixture
-def setup_data():
+def driver():
     driver = Setup().driver
     yield driver
     driver.quit()
 
-def test_form(setup_data):
-    driver = setup_data  # get driver from fixture
+def test_form(driver):
     Forms(driver)
-
-
-

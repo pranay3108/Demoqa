@@ -21,13 +21,6 @@ class Setup:
         })
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),options=chrome_options)
         self.driver.maximize_window()
-        self.driver.implicitly_wait(10)
-        wait = WebDriverWait(self.driver, 25)
+        # Removed implicit wait to prevent conflict with WebDriverWait in page objects
+        self.driver.implicitly_wait(0)
         self.driver.get("https://demoqa.com/")
-
-
-
-
-
-
-
