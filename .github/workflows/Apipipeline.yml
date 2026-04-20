@@ -5,13 +5,13 @@ on:
     branches:
       - officetimecode
     paths:
-      - bookstoreapi/**
+      - BookStoreAPI/**
 
   pull_request:
     branches:
       - officetimecode
     paths:
-      - bookstoreapi/**
+      - BookStoreAPI/**
 
   workflow_dispatch:   # allows manual run
 
@@ -21,7 +21,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: bookstoreapi
+        working-directory: BookStoreAPI
 
     steps:
       - name: Checkout code
