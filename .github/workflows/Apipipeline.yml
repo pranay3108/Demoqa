@@ -1,13 +1,27 @@
-name: API Tests (Linux)
+name: BookStore API Pipeline
 
 on:
   push:
+    branches:
+      - officetimecode
+    paths:
+      - bookstoreapi/**
+
   pull_request:
-  workflow_dispatch:
+    branches:
+      - officetimecode
+    paths:
+      - bookstoreapi/**
+
+  workflow_dispatch:   # allows manual run
 
 jobs:
-  api-tests:
+  bookstore-api-tests:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: bookstoreapi
 
     steps:
       - name: Checkout code
@@ -16,25 +30,20 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: '3.11'
+
+      - name: Create and activate virtual environment
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          python -m pip install --upgrade pip
 
       - name: Install dependencies
-        working-directory: api-tests
         run: |
-          python -m pip install --upgrade pip
+          source venv/bin/activate
           pip install -r requirements.txt
 
-      - name: Run API tests
-        working-directory: api-tests
-        env:
-          BASE_URL: ${{ secrets.API_BASE_URL }}
-          API_TOKEN: ${{ secrets.API_TOKEN }}
+      - name: Run tests
         run: |
-          pytest --html=report.html --self-contained-html
-
-      - name: Upload report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: api-test-report
-          path: api-tests/report.html
+          source venv/bin/activate
+          pytest -v
